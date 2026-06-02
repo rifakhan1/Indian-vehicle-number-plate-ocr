@@ -1,40 +1,161 @@
 # Indian-vehicle-number-plate-ocr
-Machine learning-based OCR system for extracting text characters from Indian vehicle number plates.
-
-## Project Objective
-
-To develop a machine learning-based model capable of accurately detecting and extracting alphanumeric characters from Indian vehicle number plates, enabling efficient and automated number plate recognition.
-<img width="275" height="183" alt="rrrr" src="https://github.com/user-attachments/assets/670549d0-8b21-491d-a4f8-8bd31c219846" />
-
----
 
 ## Overview
 
-This project explores Automatic Number Plate Recognition (ANPR) using deep learning and computer vision techniques. Two approaches were implemented and evaluated:
+This project presents a Deep Learning-based Automatic Number Plate Recognition (ANPR) system for Indian vehicles.
 
-1. CRNN (Convolutional Recurrent Neural Network)
-2. YOLOv8 + EasyOCR Pipeline
+The system consists of three major tasks:
+
+1. Vehicle Detection
+2. Number Plate Detection
+3. Optical Character Recognition (OCR)
+
+Additionally, a VGG19-based classifier was developed to classify vehicle number plates into White, Yellow and Green categories.
+
+
+## Project Objectives
+
+- Detect vehicles from traffic images.
+- Detect and localize number plates.
+- Extract alphanumeric characters from number plates.
+- Classify number plate color.
+- Build a complete ANPR pipeline for Indian vehicles.
+  
+<img width="275" height="183" alt="rrrr" src="https://github.com/user-attachments/assets/670549d0-8b21-491d-a4f8-8bd31c219846" />
+
+---
+## Hardware and Software Setup
+
+### Hardware
+
+| Component | Specification |
+|------------|-------------|
+| CPU RAM | 12.7 GB |
+| GPU | NVIDIA T4 (15 GB) |
+| Disk | 107.7 GB |
+
+### Software
+
+- Python
+- TensorFlow
+- PyTorch
+- OpenCV
+- Ultralytics YOLOv8
+- EasyOCR
+- Google Colab
+
+---
+## Dataset
+
+The project uses:
+
+| Dataset Type | Images |
+|--------------|---------|
+| Synthetic Number Plates | 10000 |
+| Real Number Plates | 355 |
+| Detection Dataset | Kaggle Vehicle Dataset |
+
+### Dataset Samples
+<img width="300" height="80" alt="21BH0358T" src="https://github.com/user-attachments/assets/4b48abb9-d801-4727-b4b1-d86c246beb0c" />
+
+<img width="320" height="100" alt="↑21A714323U" src="https://github.com/user-attachments/assets/1dd67103-1135-46cd-8d97-c999e57d62a5" />
+
+<img width="300" height="80" alt="AN79XR1981" src="https://github.com/user-attachments/assets/aa4314b6-d849-46ae-a202-9dd51209df35" />
+
+<img width="300" height="80" alt="8IOD4710" src="https://github.com/user-attachments/assets/5c11af1b-b64b-4590-93eb-bfd8588b8d93" />
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/real_dataset.png
+
+---
+# Activity 1: Number Plate Color Classification
+
+## Objective
+
+To classify vehicle number plates into:
+
+- White (Private Vehicles)
+- Yellow (Commercial Vehicles)
+- Green (Electric Vehicles)
+
+## Model Configuration
+
+- VGG19 (ImageNet Pretrained)
+- Input Size: 32×32×3
+- Optimizer: Adam
+- Loss: Sparse Categorical Crossentropy
+
+## Results
+
+| Metric | Value |
+|----------|----------|
+| Training Accuracy | 100% |
+| Validation Accuracy | 100% |
+| Training Loss | 3.1593e-05 |
+| Validation Loss | 0 |
+
+### Training & Validation Curves
+
+<img width="1497" height="626" alt="vgg19_training_graph" src="https://github.com/user-attachments/assets/5bf0a1bb-a9cb-415c-b2ad-b7800435e001" />
 
 ---
 
-## Approach 1: CRNN Model
-<img width="753" height="323" alt="Screenshot 2026-06-02 180527" src="https://github.com/user-attachments/assets/24cf08d0-1d21-4956-a854-41836bc930cc" />
+# Activity 2: OCR Using CRNN
 
-### Configuration
+## CRNN Architecture
 
-- Activation Function: LeakyReLU
+<img width="827" height="365" alt="Screenshot 2025-07-25 093320" src="https://github.com/user-attachments/assets/d130d8ad-73be-46ab-ac67-a629e8c44a0c" />
+
+
+The OCR module combines:
+
+- CNN layers for feature extraction
+- BiLSTM layers for sequence learning
+- CTC Loss for alignment-free training
+
+---
+
+## Experiment Comparison
+
+| Exp | Activation | Optimizer | LR | Epochs | Train Acc | Val Acc |
+|------|-----------|-----------|------|---------|----------|----------|
+| 1 | SiLU | Adam | 1e-3 | 70 | 84.84% | 77.18% |
+| 2 | ReLU | Adam | 1e-4 | 50 | 85% | 79% |
+| 3 | ReLU | AdamW | 5e-3 | 100 | 90.90% | 90.79% |
+| 4 | LeakyReLU | Adam | 5e-5 | 100 | 97.98% | 96.77% |
+
+---
+
+## Experiment 1 Results
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/crnn_exp1_accuracy_loss.png
+
+---
+
+## Experiment 2 Results
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/crnn_exp2_accuracy_loss.png
+
+---
+
+## Experiment 3 Results
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/crnn_exp3_accuracy_loss.png
+
+---
+
+## Experiment 4 Results (Best Model)
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/crnn_exp4_accuracy_loss.png
+
+### Best Configuration
+
+- Activation: LeakyReLU
 - Optimizer: Adam
 - Learning Rate: 5e-5
+- Epochs: 100
+- Dropout: 0.2
 
-### Dataset
-
-- 8000 Synthetic Images
-- 355 Real Vehicle Number Plate Images
-
-### Results
-<img width="308" height="90" alt="Screenshot 2025-07-22 102539" src="https://github.com/user-attachments/assets/57976717-5522-4c05-a3d8-372f4fb9f5dc" />
-
-<img width="314" height="54" alt="Screenshot 2025-07-24 142654" src="https://github.com/user-attachments/assets/e96d7795-5644-4339-88d2-fbb4b185680c" />
+### Performance
 
 | Metric | Value |
 |----------|----------|
@@ -43,81 +164,140 @@ This project explores Automatic Number Plate Recognition (ANPR) using deep learn
 | Training Loss | 0.0342 |
 | Validation Loss | 0.0705 |
 
-### Observations
+---
 
-The model achieved high accuracy on validation data. However, performance on real-world images was limited due to heavy reliance on synthetic training data.
+# Activity 3: YOLOv8 + EasyOCR Pipeline
+
+## Pipeline
+
+Vehicle Image
+→ Vehicle Detection
+→ Number Plate Detection
+→ Plate Cropping
+→ EasyOCR
+→ Text Extraction
+
+# Training & Validation Curves
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/yolo_train_validation_accuracy.png
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/yolo_train_validation_loss.png
 
 ---
 
-## Approach 2: YOLOv8 + EasyOCR Pipeline
+## Preprocessing
 
-### Pipeline
+- Gaussian Blur
+- RGB → HSV
+- CLAHE
+- HSV → RGB
+- Grayscale Conversion
+- Min-Max Normalization
 
-Vehicle Image → YOLOv8 Detection → Plate Cropping → EasyOCR → Text Extraction
+---
 
-### Configuration
+## Hyperparameters
 
-- Detection Model: YOLOv8
-- OCR Engine: EasyOCR
-- Activation Function: SiLU
-- Optimizer: Adam
-- Learning Rate: 0.0001
+| Parameter | Value |
+|------------|---------|
+| Epochs | 100 |
+| Image Size | 416×416 |
+| Batch Size | 16 |
+| Learning Rate | 0.0001 |
+| Weight Decay | 1e-5 |
 
-### Results
-<img width="332" height="194" alt="Screenshot 2025-07-24 142755" src="https://github.com/user-attachments/assets/c946019b-0b81-40d4-9c78-89aef3618b76" />
+---
 
+## Results
 
 | Metric | Value |
 |----------|----------|
-| Detection Accuracy | 91.5% |
+| Accuracy | 91.5% |
+| Box Loss | 1.1 |
+| Classification Loss | 0.5106 |
+| DFL Loss | 1.195 |
 
-### Observations
+# Final ANPR Tool
 
-The pipeline successfully detected vehicle number plates and extracted text, though real-world variability affected OCR performance.
+## Tool Architecture
+
+The final ANPR system consists of:
+
+### Model 1
+
+YOLOv8-n (Vehicle Detection): Identifies cars, bikes, buses, and trucks from an input image.
+
+### Model 2
+
+YOLOv8-n (Number Plate Detection): Crops number plates from detected vehicles.
+
+### Model 3
+
+CRNN OCR Module: Extracts alphanumeric text from the cropped plate images.
 
 ---
 
-## Training Environment
+## Workflow
 
-- Google Colab
-- 15GB GPU
-- Python
-- TensorFlow
-- OpenCV
-- EasyOCR
-- YOLOv8
+1. Detect Vehicles
+2. Detect Number Plates
+3. Crop Number Plates
+4. Extract Text Using CRNN
+5. Display Final Results
 
 ---
 
-## Limitations
+## Sample Outputs
+
+### OCR Results
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/ocr_output.png
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/ocr_on_unlabeled_images.png
+
+### Final Combined Output
+
+https://github.com/rifakhan1/Indian-vehicle-number-plate-ocr/blob/main/final_output.png
+
+---
+
+# Limitations
+
+- Heavy reliance on synthetic data.
+- Limited real-world images.
+- Performance decreases on:
+  - Blur
+  - Skew
+  - Distortion
+  - Green and Blue plates
 
 - TrOCR could not be fine-tuned due to GPU limitations.
-- Heavy dependence on synthetic training data.
-- Reduced performance on skewed, blurred, tilted, green, and blue number plates.
-- Domain shift between synthetic and real-world images.
 
 ---
 
-## Future Improvements
+# Future Work
 
-- Fine-tune transformer-based OCR models such as TrOCR.
-- Collect more real-world vehicle images.
-- Apply data augmentation techniques.
-- Implement OCR post-processing using Regex validation.
+- Fine-tune TrOCR models.
+- Increase real-world data collection.
+- Add advanced augmentation.
+- Implement regex-based OCR correction.
+- Deploy as a web application.
 
 ---
 
-## Applications
+# Applications
 
 - Smart Traffic Monitoring
-- Automated Toll Collection
-- Vehicle Tracking Systems
-- Parking Management Systems
+- Toll Booth Automation
+- Vehicle Tracking
+- Smart City Surveillance
+- Parking Management
 
 ---
 
-## Author
+# Author
 
-Rifa
+Rifa 
 
-B.Tech (ECE-AI), IGDTUW
+B.Tech (ECE-AI)
+
+Indira Gandhi Delhi Technical University for Women (IGDTUW), New Delhi
