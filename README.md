@@ -4,6 +4,7 @@ Machine learning-based OCR system for extracting text characters from Indian veh
 ## Project Objective
 
 To develop a machine learning-based model capable of accurately detecting and extracting alphanumeric characters from Indian vehicle number plates, enabling efficient and automated number plate recognition.
+<img width="275" height="183" alt="rrrr" src="https://github.com/user-attachments/assets/670549d0-8b21-491d-a4f8-8bd31c219846" />
 
 ---
 
@@ -13,11 +14,11 @@ This project explores Automatic Number Plate Recognition (ANPR) using deep learn
 
 1. CRNN (Convolutional Recurrent Neural Network)
 2. YOLOv8 + EasyOCR Pipeline
-<img width="275" height="183" alt="rrrr" src="https://github.com/user-attachments/assets/670549d0-8b21-491d-a4f8-8bd31c219846" />
 
 ---
 
 ## Approach 1: CRNN Model
+<img width="753" height="323" alt="Screenshot 2026-06-02 180527" src="https://github.com/user-attachments/assets/24cf08d0-1d21-4956-a854-41836bc930cc" />
 
 ### Configuration
 
@@ -31,6 +32,9 @@ This project explores Automatic Number Plate Recognition (ANPR) using deep learn
 - 355 Real Vehicle Number Plate Images
 
 ### Results
+<img width="308" height="90" alt="Screenshot 2025-07-22 102539" src="https://github.com/user-attachments/assets/57976717-5522-4c05-a3d8-372f4fb9f5dc" />
+
+<img width="314" height="54" alt="Screenshot 2025-07-24 142654" src="https://github.com/user-attachments/assets/e96d7795-5644-4339-88d2-fbb4b185680c" />
 
 | Metric | Value |
 |----------|----------|
@@ -60,6 +64,8 @@ Vehicle Image → YOLOv8 Detection → Plate Cropping → EasyOCR → Text Extra
 - Learning Rate: 0.0001
 
 ### Results
+<img width="332" height="194" alt="Screenshot 2025-07-24 142755" src="https://github.com/user-attachments/assets/c946019b-0b81-40d4-9c78-89aef3618b76" />
+
 
 | Metric | Value |
 |----------|----------|
